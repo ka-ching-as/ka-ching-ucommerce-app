@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Documentation", "Kaching\Kaching.Documentation\Kaching.Documentation.csproj", "{95C1CD84-9633-476A-B4F8-B5FAD1BFFF57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Extensions", "Kaching\Kaching.Extensions\Kaching.Extensions.csproj", "{016DC939-E023-44C6-BB53-CED29D5E5531}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Extensions.Test", "Kaching\Kaching.Extensions.Test\Kaching.Extensions.Test.csproj", "{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Web", "Kaching\Kaching.Web\Kaching.Web.csproj", "{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95C1CD84-9633-476A-B4F8-B5FAD1BFFF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C1CD84-9633-476A-B4F8-B5FAD1BFFF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C1CD84-9633-476A-B4F8-B5FAD1BFFF57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C1CD84-9633-476A-B4F8-B5FAD1BFFF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{016DC939-E023-44C6-BB53-CED29D5E5531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{016DC939-E023-44C6-BB53-CED29D5E5531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{016DC939-E023-44C6-BB53-CED29D5E5531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{016DC939-E023-44C6-BB53-CED29D5E5531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13770E0B-4701-48C6-9E1B-7B907800A96C}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
+		$0.VersionControlPolicy = $3
+	EndGlobalSection
+EndGlobal
