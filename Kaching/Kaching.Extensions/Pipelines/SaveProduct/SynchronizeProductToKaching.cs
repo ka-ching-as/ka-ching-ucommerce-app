@@ -181,6 +181,17 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
             product.Tags = new Dictionary<string, bool>();
             product.Tags["ucommerce"] = true;
 
+            foreach (var category in subject.GetCategories())
+            {
+                product.Tags[category.Name] = true;
+                var categoryIteration = category;
+                while (categoryIteration.ParentCategory != null)
+                {
+                    categoryIteration = categoryIteration.ParentCategory;
+                    product.Tags[categoryIteration.Name] = true;
+                }
+            }
+
             var url = "REDACTED";
 
 

@@ -73,10 +73,17 @@
     <Compile Include="KachingProduct.cs" />
     <Compile Include="Pipelines\SaveProduct\SynchronizeProductToKaching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pipelines\SaveCategory\SynchronizeCategoryToKaching.cs" />
+    <Compile Include="KachingTag.cs" />
+    <Compile Include="L10nString.cs" />
+    <Compile Include="Folder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pipelines\SaveCategory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
