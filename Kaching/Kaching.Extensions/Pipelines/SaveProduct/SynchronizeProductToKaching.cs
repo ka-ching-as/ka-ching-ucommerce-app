@@ -57,7 +57,6 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
             }
 
           
-
             product.RetailPrice = subject.ProductPrices.First().Price.Amount;
             product.Id = subject.Guid.ToString();
 
@@ -73,6 +72,8 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
                 product.Attributes = attributes;
             }
 
+            var attributePropertyMap = new Dictionary<string, ProductDefinitionField>();
+            //var attributeSet = new HashSet<string>();
             var list = new List<Variant>();
             foreach (var v in subject.Variants)
             {
@@ -91,6 +92,8 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
                         var value = prop.Value;
                         var name = prop.ProductDefinitionField.Name;
                         attributes[name] = value;
+                        //attributeSet.Add(name);
+                        attributePropertyMap[name] = prop.ProductDefinitionField;
                     }
                     variant.Attributes = attributes;
 
@@ -107,9 +110,63 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
 
                 list.Add(variant);
             }
+
             if (list.Count > 0)
             {
                 product.Variants = list.ToArray();
+
+                foreach (var attribute in attributePropertyMap.Keys)
+                {
+                    var flag = false;
+                    var alreadyUsed = new HashSet<string>();
+                    foreach (var variant in list)
+                    {
+                        if (variant.Attributes == null || variant.Attributes[attribute] == null)
+                        {
+                            flag = true;
+                            break;
+                        }
+                        var value = variant.Attributes[attribute];
+                        if (alreadyUsed.Contains(value))
+                        {
+                            flag = true;
+                            break;
+                        }
+                        alreadyUsed.Add(value);
+                    }
+                    if (flag)
+                    {
+                        continue;
+                    } else
+                    {
+                        // attribute uniquely identifies each variant - use it for a dimension
+                        var propertyDefinition = attributePropertyMap[attribute];
+                        var dimension = new Dimension();
+                        dimension.Id = propertyDefinition.Name;
+                        // TODO: Localize
+                        dimension.Name = new L10nString(propertyDefinition.Name);
+                        dimension.Values = new List<DimensionValue>();
+                        foreach (var property in propertyDefinition.DataType.DataTypeEnums)
+                        {
+                            var value = new DimensionValue();
+                            value.Id = property.Name;
+                            // TODO: Localize
+                            value.Name = new L10nString(property.Name);
+                            dimension.Values.Add(value);
+                        }
+                        product.Dimensions = new List<Dimension>();
+                        product.Dimensions.Add(dimension);
+                        foreach (var variant in product.Variants)
+                        {
+                            variant.DimensionValues = new Dictionary<string, string>();
+                            variant.DimensionValues[dimension.Id] = variant.Attributes[attribute];
+                        }
+                        break;
+                    }
+
+                }
+
+
             }
 
             if (!string.IsNullOrEmpty(subject.PrimaryImageMediaId))
