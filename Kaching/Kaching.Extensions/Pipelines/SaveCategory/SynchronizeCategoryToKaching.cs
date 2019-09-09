@@ -1,18 +1,24 @@
-﻿using System;
-using UCommerce.EntitiesV2;
+﻿using UCommerce.EntitiesV2;
 using UCommerce.Pipelines;
-using UCommerce.Infrastructure;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using UCommerce.Infrastructure.Logging;
 
 namespace Kaching.Extensions.Pipelines.SaveCategory
 {
     public class SynchronizeCategoryToKaching : IPipelineTask<Category>
     {
-        public Folder GenerateFolderTree(Category category)
+        private ILoggingService logging;
+
+        public SynchronizeCategoryToKaching(ILoggingService loggingService)
+        {
+            logging = loggingService;
+        }
+
+        private Folder GenerateFolderTree(Category category)
         {
             var folder = new Folder(category.Name);
             var childCategories = category.GetCategories();
@@ -31,12 +37,25 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
             return folder;
         }
 
-
         public PipelineExecutionResult Execute(Category subject)
         {
             var tag = new KachingTag();
             tag.Tag = subject.Name;
-            tag.Name = new L10nString(subject.Name);
+            tag.Name = Localizer.GetLocalizedName(new LocalizableCategory(subject));
+
+            logging.Log<SynchronizeCategoryToKaching>(subject.Name);
+            logging.Log<SynchronizeCategoryToKaching>(subject.ModifiedOn.ToString());
+
+            logging.Log<SynchronizeCategoryToKaching>("Products");
+
+            foreach (var product in subject.Products)
+            {
+                // TODO: For all 'new' products, sync product to Ka-ching...
+                // Alternatively - sync all products in category always??
+                logging.Log<SynchronizeCategoryToKaching>(product.Name);
+                logging.Log<SynchronizeCategoryToKaching>(product.CreatedOn.ToString());
+                logging.Log<SynchronizeCategoryToKaching>(product.ModifiedOn.ToString());
+            }
 
             WebResponse response = PostTag(tag);
             if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK)

@@ -77,6 +77,11 @@
     <Compile Include="KachingTag.cs" />
     <Compile Include="L10nString.cs" />
     <Compile Include="Folder.cs" />
+    <Compile Include="Localization.cs" />
+    <Compile Include="LocalizableCategory.cs" />
+    <Compile Include="LocalizableProduct.cs" />
+    <Compile Include="LocalizableProductDefinitionField.cs" />
+    <Compile Include="LocalizableDataTypeEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

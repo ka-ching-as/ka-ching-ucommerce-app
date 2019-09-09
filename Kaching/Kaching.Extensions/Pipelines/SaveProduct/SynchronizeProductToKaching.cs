@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UCommerce.EntitiesV2;
 using UCommerce.Pipelines;
 using System.Net;
@@ -8,54 +7,25 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using UCommerce.Infrastructure;
+using UCommerce.Infrastructure.Logging;
 
 namespace Kaching.Extensions.Pipelines.SaveProduct
 {
     public class SynchronizeProductToKaching : IPipelineTask<Product>
     {
+        private ILoggingService logging;
+
+        public SynchronizeProductToKaching(ILoggingService loggingService)
+        {
+            logging = loggingService;
+        }
+
         public PipelineExecutionResult Execute(Product subject)
         {
             var product = new KachingProduct();
 
-            if (subject.ProductDescriptions.Count > 1)
-            {
-                var localizedName = new Dictionary<string, string>();
-                var localizedDescription = new Dictionary<string, string>();
-
-                foreach (var description in subject.ProductDescriptions)
-                {
-                    if (description.DisplayName.Length > 0)
-                    {
-                        localizedName[description.CultureCode.Split('-').First()] = description.DisplayName;
-                    }
-                    if (description.LongDescription.Length > 0)
-                    {
-                        localizedDescription[description.CultureCode.Split('-').First()] = description.LongDescription;
-                    }
-                }
-                if (localizedDescription.Count == 1)
-                {
-                    product.Description = new L10nString(localizedDescription.Values.First());
-                }
-                else
-                {
-                    product.Description = new L10nString(localizedDescription);
-                }
-                if (localizedName.Count == 1)
-                {
-                    product.Name = new L10nString(localizedName.Values.First());
-                }
-                else
-                {
-                    product.Name = new L10nString(localizedName);
-                }
-            }
-            else
-            {
-                product.Name = new L10nString(subject.ProductDescriptions.First().DisplayName);
-                product.Description = new L10nString(subject.ProductDescriptions.First().LongDescription);
-            }
-
+            product.Name = Localizer.GetLocalizedName(new LocalizableProduct(subject));
+            product.Description = Localizer.GetLocalizedName(new LocalizableProductLongDescription(subject));
           
             product.RetailPrice = subject.ProductPrices.First().Price.Amount;
             product.Id = subject.Guid.ToString();
@@ -79,7 +49,8 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
             {
                 var variant = new Variant();
                 variant.Id = v.ProductId.ToString();
-                variant.Name = new L10nString(v.Name);
+                variant.Name = Localizer.GetLocalizedName(new LocalizableProduct(v));
+
                 if (v.ProductPrices.Count > 0)
                 {
                     variant.RetailPrice = v.ProductPrices.First().Price.Amount;
@@ -143,15 +114,13 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
                         var propertyDefinition = attributePropertyMap[attribute];
                         var dimension = new Dimension();
                         dimension.Id = propertyDefinition.Name;
-                        // TODO: Localize
-                        dimension.Name = new L10nString(propertyDefinition.Name);
+                        dimension.Name = Localizer.GetLocalizedName(new LocalizableProductDefinitionField(propertyDefinition));
                         dimension.Values = new List<DimensionValue>();
                         foreach (var property in propertyDefinition.DataType.DataTypeEnums)
                         {
                             var value = new DimensionValue();
                             value.Id = property.Name;
-                            // TODO: Localize
-                            value.Name = new L10nString(property.Name);
+                            value.Name = Localizer.GetLocalizedName(new LocalizableDataTypeEnum(property));
                             dimension.Values.Add(value);
                         }
                         product.Dimensions = new List<Dimension>();
@@ -163,10 +132,7 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
                         }
                         break;
                     }
-
                 }
-
-
             }
 
             if (!string.IsNullOrEmpty(subject.PrimaryImageMediaId))
@@ -181,8 +147,13 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
             product.Tags = new Dictionary<string, bool>();
             product.Tags["ucommerce"] = true;
 
+            logging.Log<SynchronizeProductToKaching>("CATEGORIES");
+            // TODO: If no categories exist, then this is the first time the product
+            // is saved. This means that we cannot add the correct tags yet.
+            // Perhaps skip sync and let this be handled by Category save instead.
             foreach (var category in subject.GetCategories())
             {
+                logging.Log<SynchronizeProductToKaching>(category.Name);
                 product.Tags[category.Name] = true;
                 var categoryIteration = category;
                 while (categoryIteration.ParentCategory != null)
