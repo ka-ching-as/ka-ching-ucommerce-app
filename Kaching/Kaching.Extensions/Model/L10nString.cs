@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Model
 {
     public class L10nStringConverter : JsonConverter
     {

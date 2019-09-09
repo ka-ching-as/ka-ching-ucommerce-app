@@ -1,11 +1,10 @@
 ﻿using UCommerce.EntitiesV2;
 using UCommerce.Pipelines;
-using System.Net;
-using System.IO;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using UCommerce.Infrastructure.Logging;
+using Kaching.Extensions.Localization;
+using Kaching.Extensions.Synchronization;
+using Kaching.Extensions.Model;
 
 namespace Kaching.Extensions.Pipelines.SaveCategory
 {
@@ -18,7 +17,43 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
             logging = loggingService;
         }
 
-        private Folder GenerateFolderTree(Category category)
+        public PipelineExecutionResult Execute(Category subject)
+        {
+            var tag = new KachingTag();
+            tag.Tag = subject.Name;
+            tag.Name = Localizer.GetLocalizedName(new LocalizableCategory(subject));
+
+            logging.Log<SynchronizeCategoryToKaching>(subject.Name);
+            logging.Log<SynchronizeCategoryToKaching>(subject.ModifiedOn.ToString());
+            logging.Log<SynchronizeCategoryToKaching>("Products");
+
+            foreach (var product in subject.Products)
+            {
+                // TODO: For all 'new' products, sync product to Ka-ching...
+                // Alternatively - sync all products in category always??
+                logging.Log<SynchronizeCategoryToKaching>(product.Name);
+                logging.Log<SynchronizeCategoryToKaching>(product.CreatedOn.ToString());
+                logging.Log<SynchronizeCategoryToKaching>(product.ModifiedOn.ToString());
+            }
+
+            PipelineExecutionResult result = PostTag(tag);
+            if (result == PipelineExecutionResult.Error)
+                return PipelineExecutionResult.Error;
+
+            return UpdateFolders(subject);
+        }
+
+        private static PipelineExecutionResult PostTag(KachingTag tag)
+        {
+            var url = "REDACTED";
+
+            var tags = new List<KachingTag>();
+            tags.Add(tag);
+
+            return Synchronizer.Post(tags, url);
+        }
+
+        private static Folder GenerateFolderTree(Category category)
         {
             var folder = new Folder(category.Name);
             var childCategories = category.GetCategories();
@@ -37,30 +72,8 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
             return folder;
         }
 
-        public PipelineExecutionResult Execute(Category subject)
+        public static PipelineExecutionResult UpdateFolders(Category subject)
         {
-            var tag = new KachingTag();
-            tag.Tag = subject.Name;
-            tag.Name = Localizer.GetLocalizedName(new LocalizableCategory(subject));
-
-            logging.Log<SynchronizeCategoryToKaching>(subject.Name);
-            logging.Log<SynchronizeCategoryToKaching>(subject.ModifiedOn.ToString());
-
-            logging.Log<SynchronizeCategoryToKaching>("Products");
-
-            foreach (var product in subject.Products)
-            {
-                // TODO: For all 'new' products, sync product to Ka-ching...
-                // Alternatively - sync all products in category always??
-                logging.Log<SynchronizeCategoryToKaching>(product.Name);
-                logging.Log<SynchronizeCategoryToKaching>(product.CreatedOn.ToString());
-                logging.Log<SynchronizeCategoryToKaching>(product.ModifiedOn.ToString());
-            }
-
-            WebResponse response = PostTag(tag);
-            if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK)
-                return PipelineExecutionResult.Error;
-
             var folders = new List<Folder>();
             foreach (var category in subject.ProductCatalog.GetRootCategories())
             {
@@ -68,75 +81,13 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
                 folders.Add(folder);
             }
 
-            response = PostFolders(folders);
-            if (((HttpWebResponse)response).StatusCode != HttpStatusCode.OK)
-                return PipelineExecutionResult.Error;
-
-            return PipelineExecutionResult.Success;
+            return PostFolders(folders);
         }
 
-        private static WebResponse PostTag(KachingTag tag)
+        private static PipelineExecutionResult PostFolders(List<Folder> folders)
         {
             var url = "REDACTED";
-
-
-            WebRequest request = WebRequest.Create(url);
-
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            Stream dataStream = request.GetRequestStream();
-
-            var tags = new List<KachingTag>();
-            tags.Add(tag);
-
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new SnakeCaseNamingStrategy()
-            };
-
-            string jsonProducts = JsonConvert.SerializeObject(tags, new JsonSerializerSettings
-            {
-                ContractResolver = contractResolver,
-                Formatting = Formatting.Indented,
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(jsonProducts);
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            WebResponse response = request.GetResponse();
-            return response;
-        }
-
-        private static WebResponse PostFolders(List<Folder> folders)
-        {
-            var url = "REDACTED";
-
-            WebRequest request = WebRequest.Create(url);
-
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            Stream dataStream = request.GetRequestStream();
-
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new SnakeCaseNamingStrategy()
-            };
-
-            string jsonProducts = JsonConvert.SerializeObject(folders, new JsonSerializerSettings
-            {
-                ContractResolver = contractResolver,
-                Formatting = Formatting.Indented,
-                NullValueHandling = NullValueHandling.Ignore
-            });
-
-            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(jsonProducts);
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            WebResponse response = request.GetResponse();
-            return response;
+            return Synchronizer.Post(folders, url);
         }
     }
 }

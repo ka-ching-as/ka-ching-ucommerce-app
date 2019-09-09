@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Model
 {
     public class KachingTag
     {

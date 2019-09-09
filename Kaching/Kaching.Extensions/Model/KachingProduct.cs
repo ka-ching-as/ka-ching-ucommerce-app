@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Model
 {
     public class KachingProduct
     {
         public L10nString Name { get; set; }
         public L10nString Description { get; set; }
-        public Nullable<decimal> RetailPrice { get; set; }
+        public MarketPrice RetailPrice { get; set; }
         public string Id { get; internal set; }
 
         public string ImageUrl { get; set; }
@@ -23,7 +23,7 @@ namespace Kaching.Extensions
     public class Variant
     {
         public L10nString Name { get; set; }
-        public Nullable<decimal> RetailPrice { get; set; }
+        public MarketPrice RetailPrice { get; set; }
         public string Id { get; internal set; }
         public string ImageUrl { get; set; }
         public Dictionary<string, string> DimensionValues { get; set; }
@@ -45,4 +45,6 @@ namespace Kaching.Extensions
         public string ImageUrl { get; set; }
         public string Color { get; set; }
     }
+
+
 }

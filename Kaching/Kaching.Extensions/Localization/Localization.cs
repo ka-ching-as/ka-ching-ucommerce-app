@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kaching.Extensions.Model;
 
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Localization
 {
     public interface IHasLocalizations
     {

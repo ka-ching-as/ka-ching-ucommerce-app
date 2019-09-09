@@ -70,18 +70,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KachingProduct.cs" />
     <Compile Include="Pipelines\SaveProduct\SynchronizeProductToKaching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pipelines\SaveCategory\SynchronizeCategoryToKaching.cs" />
-    <Compile Include="KachingTag.cs" />
-    <Compile Include="L10nString.cs" />
-    <Compile Include="Folder.cs" />
-    <Compile Include="Localization.cs" />
-    <Compile Include="LocalizableCategory.cs" />
-    <Compile Include="LocalizableProduct.cs" />
-    <Compile Include="LocalizableProductDefinitionField.cs" />
-    <Compile Include="LocalizableDataTypeEnum.cs" />
+    <Compile Include="Pipelines\DeleteProduct\DeleteProductFromKaching.cs" />
+    <Compile Include="Localization\LocalizableCategory.cs" />
+    <Compile Include="Localization\LocalizableDataTypeEnum.cs" />
+    <Compile Include="Localization\LocalizableProduct.cs" />
+    <Compile Include="Localization\LocalizableProductDefinitionField.cs" />
+    <Compile Include="Localization\Localization.cs" />
+    <Compile Include="Synchronization\Synchronization.cs" />
+    <Compile Include="Model\Folder.cs" />
+    <Compile Include="Model\KachingProduct.cs" />
+    <Compile Include="Model\KachingTag.cs" />
+    <Compile Include="Model\L10nString.cs" />
+    <Compile Include="Pipelines\DeleteCategory\DeleteCategoryFromKaching.cs" />
+    <Compile Include="Model\MarketPrice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -89,6 +93,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipelines\SaveCategory\" />
+    <Folder Include="Pipelines\DeleteProduct\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Synchronization\" />
+    <Folder Include="Model\" />
+    <Folder Include="Pipelines\DeleteCategory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

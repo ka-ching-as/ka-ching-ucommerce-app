@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Model
 {
     public class Folder
     {

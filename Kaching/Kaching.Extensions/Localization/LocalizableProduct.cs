@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UCommerce.EntitiesV2;
 
-namespace Kaching.Extensions
+namespace Kaching.Extensions.Localization
 {
     public class LocalizableProduct : IHasLocalizations
     {
