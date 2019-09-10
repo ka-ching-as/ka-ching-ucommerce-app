@@ -109,6 +109,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\Kaching.Components.config" />
+    <Content Include="Icons\Ka-ching-icon.png" />
+    <Content Include="Configuration.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Kaching.Settings.config" />
@@ -122,6 +124,9 @@
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Icons\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

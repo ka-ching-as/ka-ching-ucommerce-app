@@ -86,6 +86,7 @@
     <Compile Include="Model\L10nString.cs" />
     <Compile Include="Pipelines\DeleteCategory\DeleteCategoryFromKaching.cs" />
     <Compile Include="Model\MarketPrice.cs" />
+    <Compile Include="FolderProviders\KachingConfigurationFolderProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -98,6 +99,7 @@
     <Folder Include="Synchronization\" />
     <Folder Include="Model\" />
     <Folder Include="Pipelines\DeleteCategory\" />
+    <Folder Include="FolderProviders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
