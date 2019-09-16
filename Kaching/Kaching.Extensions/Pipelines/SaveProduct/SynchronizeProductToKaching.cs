@@ -4,6 +4,8 @@ using UCommerce.Infrastructure.Logging;
 using Kaching.Extensions.Synchronization;
 using Kaching.Extensions.Model;
 using Kaching.Extensions.ModelConversions;
+using System.Threading.Tasks;
+using System;
 
 namespace Kaching.Extensions.Pipelines.SaveProduct
 {
@@ -18,15 +20,36 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
 
         public PipelineExecutionResult Execute(Product subject)
         {
-            var converter = new ProductConverter(logging);
-            var product = converter.ConvertProduct(subject);
+            // In case a product is initially being created, it will not yet have a
+            // category configured. In this case delay the synchronization slightly
+            // in order to let the database save the product<->category relationship.
 
-            var url = "REDACTED";
+            Func<PipelineExecutionResult> synchronize = () =>
+            {
+                var converter = new ProductConverter(logging);
+                var product = converter.ConvertProduct(subject);
 
-            KachingProduct[] products = new KachingProduct[1];
-            products[0] = product;
+                var url = "REDACTED";
 
-            return Synchronizer.Post(new ProductsRequest(products), url);
+                KachingProduct[] products = new KachingProduct[1];
+                products[0] = product;
+
+                return Synchronizer.Post(new ProductsRequest(products), url);
+            };
+
+
+            if (subject.GetCategories().Count == 0)
+            {
+                logging.Log<SynchronizeProductToKaching>("NO CATEGORIES - SLEEP");
+                Task.Delay(2000).ContinueWith((task) =>
+                {
+                    logging.Log<SynchronizeProductToKaching>("NO CATEGORIES - DONE SLEEPING! COUNT: " + subject.GetCategories().Count);
+                    synchronize();                 
+                });
+                return PipelineExecutionResult.Success;
+            }
+
+            return synchronize();
         }
     }
 }
