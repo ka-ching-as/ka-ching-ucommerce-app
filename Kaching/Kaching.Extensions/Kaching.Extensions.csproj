@@ -89,6 +89,7 @@
     <Compile Include="FolderProviders\KachingConfigurationFolderProvider.cs" />
     <Compile Include="ModelConversions\ProductConverter.cs" />
     <Compile Include="Model\ProductsRequest.cs" />
+    <Compile Include="ModelConversions\CategoryConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

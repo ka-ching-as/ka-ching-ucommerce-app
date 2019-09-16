@@ -15,6 +15,9 @@ namespace Kaching.Web {
 
         protected global::System.Web.UI.WebControls.Label ImportStatus;
 
-        protected global::System.Web.UI.WebControls.Button StartImportButton;
+        protected global::System.Web.UI.WebControls.Button StartProductImportButton;
+
+        protected global::System.Web.UI.WebControls.Button StartCategoryImportButton;
+
     }
 }

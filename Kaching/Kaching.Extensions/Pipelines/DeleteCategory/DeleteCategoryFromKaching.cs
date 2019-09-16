@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Kaching.Extensions.Pipelines.SaveCategory;
+﻿using System.Collections.Generic;
+using Kaching.Extensions.ModelConversions;
 using Kaching.Extensions.Synchronization;
 using UCommerce.EntitiesV2;
 using UCommerce.Infrastructure.Logging;
@@ -30,7 +29,9 @@ namespace Kaching.Extensions.Pipelines.DeleteCategory
             if (result == PipelineExecutionResult.Error)
                 return result;
 
-            return SynchronizeCategoryToKaching.UpdateFolders(subject);
+            var folders = new CategoryConverter(logging).GetFolders();
+            var foldersUrl = "REDACTED";
+            return Synchronizer.Post(folders, foldersUrl);
         }
     }
 }
