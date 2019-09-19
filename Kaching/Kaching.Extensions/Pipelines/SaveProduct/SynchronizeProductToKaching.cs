@@ -6,6 +6,7 @@ using Kaching.Extensions.Model;
 using Kaching.Extensions.ModelConversions;
 using System.Threading.Tasks;
 using System;
+using Kaching.Extensions.Entities;
 
 namespace Kaching.Extensions.Pipelines.SaveProduct
 {
@@ -20,6 +21,13 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
 
         public PipelineExecutionResult Execute(Product subject)
         {
+            var config = KachingConfiguration.Get();
+            var url = config.ProductsIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return PipelineExecutionResult.Success;
+            }
+
             // In case a product is initially being created, it will not yet have a
             // category configured. In this case delay the synchronization slightly
             // in order to let the database save the product<->category relationship.
@@ -28,8 +36,6 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
             {
                 var converter = new ProductConverter(logging);
                 var product = converter.ConvertProduct(subject);
-
-                var url = "REDACTED";
 
                 KachingProduct[] products = new KachingProduct[1];
                 products[0] = product;
@@ -40,10 +46,8 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
 
             if (subject.GetCategories().Count == 0)
             {
-                logging.Log<SynchronizeProductToKaching>("NO CATEGORIES - SLEEP");
                 Task.Delay(2000).ContinueWith((task) =>
                 {
-                    logging.Log<SynchronizeProductToKaching>("NO CATEGORIES - DONE SLEEPING! COUNT: " + subject.GetCategories().Count);
                     synchronize();                 
                 });
                 return PipelineExecutionResult.Success;

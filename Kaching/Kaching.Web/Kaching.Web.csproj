@@ -120,6 +120,7 @@
     <Content Include="Css\About.css" />
     <Content Include="Media\uCommerce-logo-symbol-small.png" />
     <Content Include="Media\about.png" />
+    <Content Include="Database\Ka-ching.001.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Kaching.Settings.config" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Icons\" />
+    <Folder Include="Database\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

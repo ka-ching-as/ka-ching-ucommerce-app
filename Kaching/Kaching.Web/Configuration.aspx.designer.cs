@@ -19,5 +19,13 @@ namespace Kaching.Web {
 
         protected global::System.Web.UI.WebControls.Button StartCategoryImportButton;
 
+        protected global::System.Web.UI.WebControls.TextBox ProductsImportURL;
+
+        protected global::System.Web.UI.WebControls.TextBox TagsImportURL;
+
+        protected global::System.Web.UI.WebControls.TextBox FoldersImportURL;
+
+        protected global::System.Web.UI.WebControls.Button SaveConfigurationButton;
+
     }
 }

@@ -2,10 +2,11 @@
 using UCommerce.Pipelines;
 using System.Collections.Generic;
 using UCommerce.Infrastructure.Logging;
-using Kaching.Extensions.Localization;
 using Kaching.Extensions.Synchronization;
 using Kaching.Extensions.Model;
 using Kaching.Extensions.ModelConversions;
+using Kaching.Extensions.Entities;
+using System;
 
 namespace Kaching.Extensions.Pipelines.SaveCategory
 {
@@ -34,7 +35,12 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
 
         private PipelineExecutionResult PostTag(KachingTag tag)
         {
-            var url = "REDACTED";
+            var config = KachingConfiguration.Get();
+            var url = config.TagsIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return PipelineExecutionResult.Success;
+            }
 
             var tags = new List<KachingTag>();
             tags.Add(tag);
@@ -44,8 +50,14 @@ namespace Kaching.Extensions.Pipelines.SaveCategory
 
         public PipelineExecutionResult UpdateFolders(Category subject)
         {
+            var config = KachingConfiguration.Get();
+            var url = config.FoldersIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return PipelineExecutionResult.Success;
+            }
+
             var folders = new CategoryConverter(logging).GetFolders();
-            var url = "REDACTED";
             return Synchronizer.Post(folders, url);
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Kaching.Extensions.Entities;
 using Kaching.Extensions.Model;
 using Kaching.Extensions.ModelConversions;
 using Kaching.Extensions.Synchronization;
@@ -21,7 +23,16 @@ namespace Kaching.Web
 
         protected void Page_Load(object sender, EventArgs e)
 		{
-		}
+            if (Page.IsPostBack)
+            {
+                return;
+            }
+
+            var config = KachingConfiguration.Get();
+            ProductsImportURL.Text = config.ProductsIntegrationURL;
+            TagsImportURL.Text = config.TagsIntegrationURL;
+            FoldersImportURL.Text = config.FoldersIntegrationURL;
+        }
 
         private int ImportCategoryProducts(ICollection<Category> categories)
         {
@@ -38,14 +49,19 @@ namespace Kaching.Web
 
         private int ImportProducts(IEnumerable<Product> products)
         {
+            var config = KachingConfiguration.Get();
+            var url = config.ProductsIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return 0;
+            }
+
             var converter = new ProductConverter(logger);
             List<KachingProduct> kachingProducts = new List<KachingProduct>();
             foreach (var product in products)
             {
                 kachingProducts.Add(converter.ConvertProduct(product));
             }
-
-            var url = "REDACTED";
 
             Synchronizer.Post(new ProductsRequest(kachingProducts.ToArray()), url);
             return kachingProducts.Count;
@@ -60,14 +76,34 @@ namespace Kaching.Web
 
         private void PostTags(List<KachingTag> tags)
         {
-            var url = "REDACTED";
+            var config = KachingConfiguration.Get();
+            var url = config.TagsIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return;
+            }
             Synchronizer.Post(tags, url);
         }
 
         public void PostFolders(List<Folder> folders)
         {
-            var url = "REDACTED";
+            var config = KachingConfiguration.Get();
+            var url = config.FoldersIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return;
+            }
             Synchronizer.Post(folders, url);
+        }
+
+        protected void SaveConfigurationButton_Click(Object sender, EventArgs e)
+        {
+            var repository = ObjectFactory.Instance.Resolve<IRepository<KachingConfiguration>>();
+            var config = KachingConfiguration.Get();
+            config.ProductsIntegrationURL = ProductsImportURL.Text;
+            config.FoldersIntegrationURL = FoldersImportURL.Text;
+            config.TagsIntegrationURL = TagsImportURL.Text;
+            repository.Save(config);
         }
 
         protected void StartCategoryImportButton_Click(Object sender, EventArgs e)

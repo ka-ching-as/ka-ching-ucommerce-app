@@ -17,6 +17,16 @@
                     onclick="StartCategoryImportButton_Click"
                     onClientClick="document.getElementById('ImportStatus').innerHTML = 'Initiating category import...';"
                     runat="server"/>
+                    
+        
+        <asp:textbox id="ProductsImportURL" runat="server"></asp:textbox>
+        <asp:textbox id="TagsImportURL" runat="server"></asp:textbox>
+        <asp:textbox id="FoldersImportURL" runat="server"></asp:textbox>
+        
+                <asp:button id="SaveConfigurationButton"
+                    text="Save configuration"
+                    onclick="SaveConfigurationButton_Click"
+                    runat="server"/>
 
     </form>
 </h3>

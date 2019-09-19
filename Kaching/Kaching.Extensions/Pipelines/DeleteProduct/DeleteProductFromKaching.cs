@@ -3,6 +3,8 @@ using UCommerce.EntitiesV2;
 using UCommerce.Infrastructure.Logging;
 using UCommerce.Pipelines;
 using Kaching.Extensions.Synchronization;
+using Kaching.Extensions.Entities;
+using System;
 
 namespace Kaching.Extensions.Pipelines.DeleteProduct
 {
@@ -17,11 +19,16 @@ namespace Kaching.Extensions.Pipelines.DeleteProduct
 
         public PipelineExecutionResult Execute(Product subject)
         {
+            var config = KachingConfiguration.Get();
+            var url = config.ProductsIntegrationURL;
+            if (!url.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return PipelineExecutionResult.Success;
+            }
+
             var idToDelete = subject.Guid.ToString();
 
             logging.Log<DeleteProductFromKaching>("Deleting product: " + subject.Name + " in Ka-ching");
-            var url = "https://us-central1-ka-ching-base-dev.cloudfunctions.net/imports/products?account=brugsen&apikey=ABC&integration=ucommerce";
-
             var idsToDelete = new List<string>();
             idsToDelete.Add(idToDelete);
             var deletionRequest = new ProductDeletionRequest();
