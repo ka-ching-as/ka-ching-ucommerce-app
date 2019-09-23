@@ -7,6 +7,8 @@ using Kaching.Extensions.ModelConversions;
 using System.Threading.Tasks;
 using System;
 using Kaching.Extensions.Entities;
+using UCommerce.Infrastructure;
+using System.Linq;
 
 namespace Kaching.Extensions.Pipelines.SaveProduct
 {
@@ -39,8 +41,9 @@ namespace Kaching.Extensions.Pipelines.SaveProduct
 
                 KachingProduct[] products = new KachingProduct[1];
                 products[0] = product;
+                var metadata = converter.GetMetadata();
 
-                return Synchronizer.Post(new ProductsRequest(products), url);
+                return Synchronizer.Post(new ProductsRequest(products, metadata), url);
             };
 
 

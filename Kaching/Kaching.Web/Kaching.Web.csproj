@@ -121,6 +121,7 @@
     <Content Include="Media\uCommerce-logo-symbol-small.png" />
     <Content Include="Media\about.png" />
     <Content Include="Database\Ka-ching.001.sql" />
+    <Content Include="Database\Ka-ching.002.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Kaching.Settings.config" />

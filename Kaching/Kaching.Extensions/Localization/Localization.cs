@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kaching.Extensions.Entities;
 using Kaching.Extensions.Model;
+using UCommerce.EntitiesV2;
+using UCommerce.Infrastructure;
 
 namespace Kaching.Extensions.Localization
 {
@@ -21,7 +24,16 @@ namespace Kaching.Extensions.Localization
     {
         private static string GetKachingLanguageCode(string cultureCode)
         {
-            return cultureCode.Split('-').First();
+            var languageCode = cultureCode.Split('-').First();
+            var mappingRepository = ObjectFactory.Instance.Resolve<IRepository<KachingCultureCodeMapping>>();
+            var cultureCodeMappings = mappingRepository.Select();
+
+            var mapping = cultureCodeMappings.FirstOrDefault(m => m.CultureCode.ToLower() == cultureCode.ToLower());
+            if (mapping != null)
+            {
+                return mapping.LanguageCode;
+            }
+            return languageCode;
         }
 
         public static L10nString GetLocalizedName<T>(T localized) where T : IHasLocalizations

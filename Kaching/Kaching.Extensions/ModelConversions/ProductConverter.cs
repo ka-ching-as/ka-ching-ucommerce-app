@@ -5,16 +5,44 @@ using System.Collections.Generic;
 using UCommerce.Infrastructure.Logging;
 using System.Linq;
 using UCommerce.Infrastructure;
+using Kaching.Extensions.Entities;
 
 namespace Kaching.Extensions.ModelConversions
 {
     public class ProductConverter
     {
         private ILoggingService logging;
+        private IQueryable<PriceGroup> priceGroups;
+        private IQueryable<KachingPriceGroupMapping> priceGroupMappings;
 
         public ProductConverter(ILoggingService loggingService)
         {
             logging = loggingService;
+            var priceGroupRepository = ObjectFactory.Instance.Resolve<IRepository<PriceGroup>>();
+            priceGroups = priceGroupRepository.Select();
+
+            var mappingRepository = ObjectFactory.Instance.Resolve<IRepository<KachingPriceGroupMapping>>();
+            priceGroupMappings = mappingRepository.Select();
+        }
+
+        public KachingMetadata GetMetadata()
+        {
+            KachingMetadata metadata = null;
+            if (priceGroups.Count() > 1)
+            {
+                metadata = new KachingMetadata();
+                foreach (var priceGroup in priceGroups)
+                {
+                    var market = priceGroup.Name;
+                    var mapping = priceGroupMappings.FirstOrDefault(p => p.PriceGroup == priceGroup);
+                    if (mapping != null)
+                    {
+                        market = mapping.MarketCode;
+                    }
+                    metadata.Markets.Add(market);
+                }
+            }
+            return metadata;
         }
 
         public KachingProduct ConvertProduct(Product subject)
@@ -34,7 +62,7 @@ namespace Kaching.Extensions.ModelConversions
             {
                 return null;
             }
-            else if (prices.Count == 1)
+            else if (priceGroups.Count() == 1)
             {
                 return new MarketPrice(prices.First().Price.Amount);
             }
@@ -43,7 +71,13 @@ namespace Kaching.Extensions.ModelConversions
                 var priceDict = new Dictionary<string, decimal>();
                 foreach (var price in prices)
                 {
-                    priceDict[price.Price.PriceGroup.Name] = price.Price.Amount;
+                    var key = price.Price.PriceGroup.Name;
+                    var mapping = priceGroupMappings.FirstOrDefault(p => p.PriceGroup == price.Price.PriceGroup);
+                    if (mapping != null)
+                    {
+                        key = mapping.MarketCode;
+                    }
+                    priceDict[key] = price.Price.Amount;
                 }
                 return new MarketPrice(priceDict);
             }
@@ -70,30 +104,23 @@ namespace Kaching.Extensions.ModelConversions
 
         private void AddTags(Product subject, KachingProduct product)
         {
-            product.Tags = new Dictionary<string, bool>();
-            product.Tags["ucommerce"] = true;
-            if (logging != null)
-            {
-                logging.Log<ProductConverter>("CATEGORIES");
-            }
-            // TODO: If no categories exist, then this is the first time the product
-            // is saved. This means that we cannot add the correct tags yet.
-            // Perhaps skip sync and let this be handled by Category save instead.
+            var tags = new HashSet<string>();
+            // Just as a convenience, always add a 'ucommerce' tag to allow for easy identification of
+            // products from Ucommerce.
+            tags.Add("ucommerce");
+
             foreach (var category in subject.GetCategories())
             {
-                if (logging != null)
-                {
-                    logging.Log<ProductConverter>(category.Name);
-                }
+                tags.Add(category.Name);
 
-                product.Tags[category.Name] = true;
                 var categoryIteration = category;
                 while (categoryIteration.ParentCategory != null)
                 {
                     categoryIteration = categoryIteration.ParentCategory;
-                    product.Tags[categoryIteration.Name] = true;
+                    tags.Add(categoryIteration.Name);
                 }
             }
+            product.Tags = tags;
         }
 
         private void AddAttributes(Product subject, KachingProduct product)
@@ -194,7 +221,6 @@ namespace Kaching.Extensions.ModelConversions
                     var value = prop.Value;
                     var name = prop.ProductDefinitionField.Name;
                     attributes[name] = value;
-                    //attributeSet.Add(name);
                     attributePropertyMap[name] = prop.ProductDefinitionField;
                 }
                 variant.Attributes = attributes;

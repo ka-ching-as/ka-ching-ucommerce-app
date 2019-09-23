@@ -1,3 +1,9 @@
 ﻿body {
-	background-color: white;
+    background-color: white;
+    font-family: open_sansregular, "Open Sans", sans-serif;
+    font-size: 15px;
+}
+
+.TextBoxStyle {
+    min-width: 500px;
 }

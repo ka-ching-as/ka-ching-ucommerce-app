@@ -114,6 +114,9 @@
     <Compile Include="ModelConversions\CategoryConverter.cs" />
     <Compile Include="Entities\KachingConfiguration.cs" />
     <Compile Include="Pipelines\MigrateDatabase\MigrateDatabase.cs" />
+    <Compile Include="Entities\KachingCultureCodeMapping.cs" />
+    <Compile Include="Entities\KachingPriceGroupMapping.cs" />
+    <Compile Include="Model\KachingMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

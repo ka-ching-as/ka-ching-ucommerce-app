@@ -27,5 +27,9 @@ namespace Kaching.Web {
 
         protected global::System.Web.UI.WebControls.Button SaveConfigurationButton;
 
+        protected global::System.Web.UI.WebControls.DataList PriceGroupList;
+
+        protected global::System.Web.UI.WebControls.DataList CultureCodeList;
+
     }
 }

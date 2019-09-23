@@ -4,6 +4,35 @@ using System.Collections.Generic;
 
 namespace Kaching.Extensions.Model
 {
+    public class ProductTagsConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var tags = (HashSet<string>)value;
+            if (tags.Count > 0)
+            {
+                var tagsDict = new Dictionary<string, bool>();
+                foreach (var tag in tags)
+                {
+                    tagsDict[tag] = true;
+                }
+                serializer.Serialize(writer, tagsDict);
+            }
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            // Only handling serialization for now
+            throw new NotImplementedException();
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(HashSet<string>);
+        }
+    }
+
+
     public class KachingProduct
     {
         public L10nString Name { get; set; }
@@ -17,7 +46,9 @@ namespace Kaching.Extensions.Model
         public List<Dimension> Dimensions { get; set; }
 
         public Dictionary<string, string> Attributes { get; set; }
-        public Dictionary<string, bool> Tags { get; set; }
+
+        [JsonConverter(typeof(ProductTagsConverter))]
+        public HashSet<string> Tags { get; set; }
     }
 
     public class Variant
