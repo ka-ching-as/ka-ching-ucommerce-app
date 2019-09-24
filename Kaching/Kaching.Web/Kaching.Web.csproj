@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Kaching.Web</RootNamespace>
     <AssemblyName>Kaching.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -104,13 +104,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Kaching.Documentation\Kaching.Documentation.csproj">
-      <Project>{95c1cd84-9633-476a-b4f8-b5fad1bfff57}</Project>
-      <Name>Documentation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Kaching.Extensions\Kaching.Extensions.csproj">
-      <Project>{016dc939-e023-44c6-bb53-ced29d5e5531}</Project>
-      <Name>Extensions</Name>
+      <Project>{016DC939-E023-44C6-BB53-CED29D5E5531}</Project>
+      <Name>Kaching.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

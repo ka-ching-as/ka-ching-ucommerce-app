@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Documentation", "Ka
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Extensions", "Kaching\Kaching.Extensions\Kaching.Extensions.csproj", "{016DC939-E023-44C6-BB53-CED29D5E5531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Extensions.Test", "Kaching\Kaching.Extensions.Test\Kaching.Extensions.Test.csproj", "{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaching.Web", "Kaching\Kaching.Web\Kaching.Web.csproj", "{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{016DC939-E023-44C6-BB53-CED29D5E5531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{016DC939-E023-44C6-BB53-CED29D5E5531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{016DC939-E023-44C6-BB53-CED29D5E5531}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7701B89A-3D3C-4B30-BB0F-4DBC3C706C4A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C4CC80D-2B0C-4F27-B52A-BFA300F81493}.Release|Any CPU.ActiveCfg = Release|Any CPU
