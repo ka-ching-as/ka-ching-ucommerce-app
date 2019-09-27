@@ -1,4 +1,5 @@
 # The Ka-ching app for Ucommerce
+![Ka-ching app screenshot](https://raw.githubusercontent.com/ka-ching-as/ka-ching-ucommerce-app/master/screenshot.png)
 
 ## Functionality provided by the Ka-ching app
 
