@@ -6,7 +6,36 @@ The Ka-ching app for Ucommerce adds automatic syncronization of Products and Cat
 The app can be configured to provide mappings of Ucommerce Price Groups to Ka-ching Markets as well as Ucommerce Culture Codes to Ka-ching Language codes.
 For even more customization, you can freely edit the source code to provide custom logic.
 
-## Installing the app
+## Data handled by the Ka-ching app
+
+### Products
+
+* Display name for all defined languages
+* Description for all defined languages
+* Prices for all price groups - mapped to markets in Ka-ching
+* Product image if present
+* Product properties - mapped to attributes in Ka-ching
+* Category hierarchy locations - mapped to product tags in Ka-ching
+
+### Variants
+
+* Display name for all defined languages
+* Prices for all price groups - mapped to markets in Ka-ching
+* Variant image if present
+* Variant properties - mapped to attributes and dimensions in Ka-ching
+
+### Categories
+* Categories are mapped to tags - display name is mapped for all defined languages
+* Category hierarch is mapped to Folder Structure in Ka-ching
+
+## Handled pipelines
+
+* SaveProduct
+* DeleteProduct
+* SaveCategory
+* DeleteCategory
+
+## Installing the Ka-ching app
 
 The app can be installed as a .nupkg through the Ucommerce App Installation page.
 
