@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+	<head>
+		<meta charset="utf-8" />
+		<title>uCommerce Documentation - Home</title>
+		
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,700" />
+
+		<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		
+		<link href="css/main.css?cdv=1" type="text/css" rel="stylesheet"/>
+		<link href="css/ucommerce.css" type="text/css" rel="stylesheet" />
+		<link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+		<link href="css/SyntaxHighlighter/shCore.css" type="text/css" rel="stylesheet" />
+		<link href="css/SyntaxHighlighter/shThemeVS.css" type="text/css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container">
+			<section class="banner">
+				<div class="text">
+					<h1>Ka-ching App Documentation</h1>
+						<p class="strap">Includes documentation on what the Ka-ching App contains and how to set it up and use it</p>
+				</div>
+				<img src="images/documentation.jpg" alt="" class="banner-image">
+			</section>
+			<div style="clear:both;"></div>	
+			<div class="main">
+				<div class="contentcontainer">
+					<section class="two-cols cf">
+						<nav class="secondary">
+							<h2>Documentation</h2>
+						</nav>
+						<section class="main-col">
+                            <h1 id="front-page">The Ka-ching app for Ucommerce</h1>
+                            <p>The Ka-ching app for Ucommerce adds automatic syncronization of Products and Categories from Ucommerce to Products, Tags and Folder hierarchies in Ka-ching.
+The app can be configured to provide mappings of Ucommerce Price Groups to Ka-ching Markets as well as Ucommerce Culture Codes to Ka-ching Language codes.
+For even more customization, you can freely edit the source code to provide custom logic.</p>
+
+<h2 id="toc_2">Data handled by the Ka-ching app</h2>
+
+<h3 id="toc_3">Products</h3>
+
+<ul>
+<li>Display name for all defined languages</li>
+<li>Description for all defined languages</li>
+<li>Prices for all price groups - mapped to markets in Ka-ching</li>
+<li>Product image if present</li>
+<li>Product properties - mapped to attributes in Ka-ching</li>
+<li>Category hierarchy locations - mapped to product tags in Ka-ching</li>
+</ul>
+
+<h3 id="toc_4">Variants</h3>
+
+<ul>
+<li>Display name for all defined languages</li>
+<li>Prices for all price groups - mapped to markets in Ka-ching</li>
+<li>Variant image if present</li>
+<li>Variant properties - mapped to attributes and dimensions in Ka-ching</li>
+</ul>
+
+<h3 id="toc_5">Categories</h3>
+
+<ul>
+<li>Categories are mapped to tags - display name is mapped for all defined languages</li>
+<li>Category hierarch is mapped to Folder Structure in Ka-ching</li>
+</ul>
+
+<h2 id="toc_6">Handled pipelines</h2>
+
+<ul>
+<li>SaveProduct</li>
+<li>DeleteProduct</li>
+<li>SaveCategory</li>
+<li>DeleteCategory</li>
+</ul>
+
+<h2 id="toc_7">Installing the Ka-ching app</h2>
+
+<p>The app can be installed as a .nupkg through the Ucommerce App Installation page.</p>
+
+<h2 id="toc_8">Configuring the Ka-ching app</h2>
+
+<p>After installation, the Ka-ching app adds a configuration page under the Ucommerce Settings.
+Here you can configure import endpoints from Ka-ching. You can generate import endpoints by logging into the <a href="https://backoffice.ka-ching.dk">Ka-ching Back Office</a>, enable &#39;Advanced Options&#39; under the profile button in the top right corner, and then follow the instructions on the Import Integrations page.
+The required import endpoints are:</p>
+
+<ul>
+<li>Products</li>
+<li>Folders</li>
+<li>Tags</li>
+</ul>
+<p>After generating the endpoints, the URLs of the endpoints can be copy pasted into the Ka-ching configuration page in Ucommerce.</p>
+
+<p>In case you use multiple Price Groups and you have localized your data in Ucommerce, then you may optionally provide mappings of these in the configuration page.</p>
+
+<p>After configuring the system, you can start initial imports of products and categories, and from there on any changes saved to products and categories will automatically sync to Ka-ching.</p>
+
+<h2 id="toc_9">Customizing the Ka-ching app</h2>
+
+<p>The source code of the Ka-ching app is completely open, so you are welcome to perform any modifications to the conversion of entities from Ucommerce to Ka-ching.
+The namespace Kaching.Extensions.Model contains entities and JSON conversions that match the models expected by Ka-ching. The Kaching.Extensions.Synchronization handles the actual serialization and POST&#39;ing to the Ka-ching import endpoints, to most likely this will not require any changes.
+Good candidates for changing are the classes in the Kaching.Extensions.ModelConversions namespace. </p>
+
+<p>These deal with the actual conversions and here you may for instance choose how custom Data Types map to Product Attributes in Ka-ching.</p>
+
+						</section>
+					</section>
+				</div>
+			</div>		
+		</div>
+		
+		<script type="text/javascript" src="scripts/jquery-1.7.2.min.js?cdv=1"></script>
+		<script type="text/javascript" src="scripts/UCommerce.js"></script>
+		<script type="text/javascript" src="scripts/SyntaxHighlighter/shCore.js"></script>
+		<script type="text/javascript" src="scripts/SyntaxHighlighter/shAutoloader.js"></script>
+		<script type="text/javascript">
+			SyntaxHighlighter.autoloader(
+				'js jscript javascript	scripts/SyntaxHighlighter/shBrushJScript.js',
+				'csharp					scripts/SyntaxHighlighter/shBrushCSharp.js',
+				'xml xslt html			scripts/SyntaxHighlighter/shBrushXml.js',
+				'sql					scripts/SyntaxHighlighter/shBrushSql',
+				'css					scripts/SyntaxHighlighter/shBrushCss.js',
+				'json					scripts/SyntaxHighlighter/shBrushJson.js'
+			);
+			
+			SyntaxHighlighter.all();
+			
+			$(function() {
+				$('table').addClass('variables-matrix table table-bordered table-striped');
+			});
+		</script>
+	</body>
+</html>

@@ -41,6 +41,9 @@ Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
     <PackageIconUrl>https://scontent.fcph3-1.fna.fbcdn.net/v/t1.0-9/65599938_1146500505551266_6640881710135246848_o.png?_nc_cat=111&amp;_nc_oc=AQnNCWIVBqMsAdgQnG00OWdJj89ScFAOwtWdkXvrG-_mvHHk3mTIzwRai_M_dWljnEo&amp;_nc_ht=scontent.fcph3-1.fna&amp;oh=b20b2197e1c77ce7114e977dba0fa0b3&amp;oe=5DFBEAF3</PackageIconUrl>
     <Copyright>Ka-ching A/S</Copyright>
     <PackageLicenseUrl>https://creativecommons.org/share-your-work/public-domain/cc0/</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ka-ching-as/ka-ching-ucommerce-app</PackageProjectUrl>
+    <Summary>The Ka-ching app for Ucommerce automatically exports Products and Categories when these are saved.</Summary>
+    <Title>Ka-ching app</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,13 +128,6 @@ Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\Kaching.Components.config" />
-    <Content Include="Icons\Ka-ching-icon.png" />
-    <Content Include="Configuration.aspx" />
-    <Content Include="Css\About.css" />
-    <Content Include="Media\uCommerce-logo-symbol-small.png" />
-    <Content Include="Media\about.png" />
-    <Content Include="Database\Ka-ching.001.sql" />
-    <Content Include="Database\Ka-ching.002.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Kaching.Settings.config" />
@@ -145,10 +141,177 @@ Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
     <None Include="web.Release.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
+    <None Include="Media\about.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Database\Ka-ching.001.sql">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Database\Ka-ching.002.sql" />
+    <None Include="Configuration.aspx">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Media\uCommerce-logo-symbol-small.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Icons\Ka-ching-icon.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Css\About.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\css\ucommerce.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\css\bootstrap.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\css\main.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\css\SyntaxHighLighter\shThemeVS.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\css\SyntaxHighLighter\shCore.css">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\documentation.jpg">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\body.jpg">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\logo-250x250.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\logo.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\primary.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\ctaballRight16x16.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\iconWhiteLinkedIn.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\treemenu_expanded.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\iconWhiteGooglePlus.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\iconWhiteTwitter.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\treemenu_collapsed.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\images\icons\16x16\iconWhiteYouTube.png">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shAutoloader.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushErlang.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushJavaFX.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushJava.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushPlain.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushPhp.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushAppleScript.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushPerl.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushDelphi.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushBash.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushCss.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushCpp.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushPowerShell.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushPython.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushDiff.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushJScript.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushCSharp.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushJSON.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushAS3.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushColdFusion.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushGroovy.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\index.html">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\jquery-1.7.2.min.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\UCommerce.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushVb.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushSql.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushRuby.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushSass.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushScala.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shCore.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shBrushXml.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="documentation\scripts\SyntaxHighlighter\shLegacy.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Icons\" />
     <Folder Include="Database\" />
+    <Folder Include="documentation\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

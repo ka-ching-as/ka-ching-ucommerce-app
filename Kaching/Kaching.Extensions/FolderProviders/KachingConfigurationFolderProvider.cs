@@ -20,7 +20,7 @@ namespace Kaching.Extensions.FolderProviders
                 {
                     Name = "Ka-ching",
                     HasChildren = false,
-                    Action = "/Apps/Ka-ching/contentFiles/any/net452/Configuration.aspx",
+                    Action = "/Apps/Ka-ching/Configuration.aspx",
                     Icon = "icon icon-settings"
                 }
             };

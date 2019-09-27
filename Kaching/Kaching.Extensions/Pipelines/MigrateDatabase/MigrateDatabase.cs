@@ -32,7 +32,7 @@ namespace Kaching.Extensions.Pipelines.MigrateDatabase
             string physicalPathToUCommerce = HostingEnvironment.MapPath(webpathToUCommerceRoot);
 
             //Join the sub folder where our migration scripts are located
-            string pathToApp = Path.Combine(physicalPathToUCommerce, @"Apps\Ka-ching\contentFiles\any\net452\Database");
+            string pathToApp = Path.Combine(physicalPathToUCommerce, @"Apps\Ka-ching\Database");
 
             //Use MigrationLoader to get the migrations
             IList<UCommerce.Installer.Migration> migrations = new UCommerce.Installer.MigrationLoader().GetDatabaseMigrations(new DirectoryInfo(pathToApp));
