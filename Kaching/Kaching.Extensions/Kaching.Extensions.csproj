@@ -117,6 +117,7 @@
     <Compile Include="Entities\KachingCultureCodeMapping.cs" />
     <Compile Include="Entities\KachingPriceGroupMapping.cs" />
     <Compile Include="Model\KachingMetadata.cs" />
+    <Compile Include="Localization\HtmlUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

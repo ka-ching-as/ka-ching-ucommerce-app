@@ -298,7 +298,7 @@ namespace Kaching.Web
                 ImportProducts(batchList);
             }
 
-            ImportStatus.Text = $"Initiated import of {total} products.";
+            ImportStatus.Text = $"Initiated export of {total} products.";
         }
 
         private void PostTags(List<KachingTag> tags)
@@ -345,7 +345,7 @@ namespace Kaching.Web
             PostTags(tags);
 
             var count = tags.Count;
-            ImportStatus.Text = $"Initiated import of {count} categories.";
+            ImportStatus.Text = $"Initiated export of {count} categories.";
         }
 
     }

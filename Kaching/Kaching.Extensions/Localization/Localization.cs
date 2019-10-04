@@ -38,7 +38,7 @@ namespace Kaching.Extensions.Localization
 
         public static L10nString GetLocalizedName<T>(T localized) where T : IHasLocalizations
         {
-            var defaultName = new L10nString(localized.DefaultName);
+            var defaultName = new L10nString(HtmlUtilities.ConvertToPlainText(localized.DefaultName));
             if (localized.Localizations.Count == 0)
             {
                 return defaultName;
@@ -54,7 +54,7 @@ namespace Kaching.Extensions.Localization
                         return defaultName;
                     }
 
-                    return new L10nString(description.DisplayName);
+                    return new L10nString(HtmlUtilities.ConvertToPlainText(description.DisplayName));
                 }
                 // Will not actually happen. This is just to satisfy the compiler.
                 return defaultName;
@@ -69,7 +69,7 @@ namespace Kaching.Extensions.Localization
                     {
                         continue;
                     }
-                    localizations[languageCode] = description.DisplayName;
+                    localizations[languageCode] = HtmlUtilities.ConvertToPlainText(description.DisplayName);
                 }
                 if (localizations.Count == 0)
                 {

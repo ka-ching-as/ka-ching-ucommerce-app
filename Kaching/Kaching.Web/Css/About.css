@@ -1,9 +1,28 @@
 ﻿body {
-    background-color: white;
-    font-family: open_sansregular, "Open Sans", sans-serif;
+    margin: 0;
+    padding: 20px;
+    font-family: Lato,Helvetica Neue,Helvetica,Arial,sans-serif;
     font-size: 15px;
+    line-height: 20px;
+    color: #000;
+    background: #f6f4f4;
+}
+.configuration {
+    padding: 20px
 }
 
-.TextBoxStyle {
-    min-width: 500px;
+.text-box {
+    flex: 1 1 auto;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+#ImportStatus {
+       margin-top: 20px;
+       display: block;
+       padding: 10px;
+       background-color: rgba(43,195,124,.07);
+       border-top: 2px solid rgba(43,195,124,.7);
 }

@@ -21,7 +21,7 @@ namespace Kaching.Extensions.FolderProviders
                     Name = "Ka-ching",
                     HasChildren = false,
                     Action = "/Apps/Ka-ching/Configuration.aspx",
-                    Icon = "icon icon-settings"
+                    Icon = "icon icon-coins"
                 }
             };
         }

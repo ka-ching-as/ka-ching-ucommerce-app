@@ -34,7 +34,7 @@
 * Prices in multiple Price Groups are supported by providing a mapping from a Price Group in Ucommerce to a Market in Ka-ching.
 * Categories in Ucommerce map to Tags and Folder structures in Ka-ching.</Description>
     <PackageTags>Ka-ching, kaching, Ucommerce, ecommerce</PackageTags>
-    <PackageReleaseNotes>NEW: Initial release.
+    <PackageReleaseNotes>Initial release:
 In release 1.0.0 the Ka-ching app handles basic product properties, localization, variants, images, attributes and more.
 Languages and price groups can be mapped to the Ka-ching equivalents.
 Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
@@ -147,7 +147,9 @@ Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
     <None Include="Database\Ka-ching.001.sql">
       <IncludeInPackage>true</IncludeInPackage>
     </None>
-    <None Include="Database\Ka-ching.002.sql" />
+    <None Include="Database\Ka-ching.002.sql">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
     <None Include="Configuration.aspx">
       <IncludeInPackage>true</IncludeInPackage>
     </None>
@@ -305,6 +307,9 @@ Categories map to Folders and Tags in Ka-ching.</PackageReleaseNotes>
       <IncludeInPackage>true</IncludeInPackage>
     </None>
     <None Include="documentation\scripts\SyntaxHighlighter\shLegacy.js">
+      <IncludeInPackage>true</IncludeInPackage>
+    </None>
+    <None Include="Css\Ucommerce.css">
       <IncludeInPackage>true</IncludeInPackage>
     </None>
   </ItemGroup>

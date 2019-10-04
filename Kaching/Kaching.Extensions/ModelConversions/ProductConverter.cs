@@ -97,7 +97,7 @@ namespace Kaching.Extensions.ModelConversions
                 var imageUrl = ObjectFactory.Instance.Resolve<UCommerce.Content.IImageService>().GetImage(subject.PrimaryImageMediaId).Url;
                 if (!string.IsNullOrEmpty(imageUrl))
                 {
-                    product.ImageUrl = imageUrl;
+                    product.ImageUrl = DomainName() + imageUrl;
                 }
             }
         }
@@ -199,6 +199,23 @@ namespace Kaching.Extensions.ModelConversions
                         value.Name = Localizer.GetLocalizedName(new LocalizableDataTypeEnum(property));
                         dimension.Values.Add(value);
                     }
+                    if (dimension.Values.Count == 0)
+                    {
+                        // No enums defined - show values directly instead
+                        var allValues = new HashSet<string>();
+                        foreach (var variant in product.Variants)
+                        {
+                            allValues.Add(variant.Attributes[attribute]);
+                        }
+                        foreach (var valueString in allValues.OrderBy(a => a))
+                        {
+                            var value = new DimensionValue();
+                            value.Id = valueString;
+                            value.Name = new L10nString(valueString);
+                            dimension.Values.Add(value);
+                        }
+                    }
+
                     product.Dimensions = new List<Dimension>();
                     product.Dimensions.Add(dimension);
                     foreach (var variant in product.Variants)
@@ -227,6 +244,19 @@ namespace Kaching.Extensions.ModelConversions
             }
         }
 
+        private string DomainName()
+        {
+            var domain = ObjectFactory.Instance.Resolve<UCommerce.Content.IDomainService>().GetDomains().First();
+            if (domain != null)
+            {
+                return domain.DomainName;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         private void AddBasicVariantProperties(Product v, Variant variant)
         {
             variant.Id = v.ProductId.ToString();
@@ -237,7 +267,7 @@ namespace Kaching.Extensions.ModelConversions
                 var imageUrl = ObjectFactory.Instance.Resolve<UCommerce.Content.IImageService>().GetImage(v.PrimaryImageMediaId).Url;
                 if (!string.IsNullOrEmpty(imageUrl))
                 {
-                    variant.ImageUrl = imageUrl;
+                    variant.ImageUrl = DomainName() + imageUrl;
                 }
             }
         }
